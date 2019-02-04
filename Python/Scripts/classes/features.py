@@ -212,7 +212,7 @@ class Features(Navigation, Inputs):
         end = time.time() + duration
 
         self.menu("adventure")
-        self.click(625, 500)  # click somewhere to move tooltip
+        self.click(362, 365)  # click somewhere to move tooltip
         itopod_active = self.get_pixel_color(ncon.ITOPOD_ACTIVEX,
                                              ncon.ITOPOD_ACTIVEY)
         # check if we're already in ITOPOD, otherwise enter
@@ -699,27 +699,6 @@ class Features(Navigation, Inputs):
             i += 1
         return coords
 
-    def merge_inventory(self, slots):
-        """Merge all inventory slots starting from 1 to slots.
-        Keyword arguments:
-        slots -- The amount of slots you wish to merge
-        """
-        self.menu("inventory")
-        coords = self.get_inventory_slots(slots)
-        for slot in coords:
-            self.click(slot.x, slot.y)
-            self.send_string("d")
-
-    def boost_inventory(self, slots):
-        """Merge all inventory slots starting from 1 to slots.
-        Keyword arguments:
-        slots -- The amount of slots you wish to merge
-        """
-        self.menu("inventory")
-        coords = self.get_inventory_slots(slots)
-        for slot in coords:
-            self.click(slot.x, slot.y)
-            self.send_string("a")
     def transform_slot(self, slot, threshold=0.8, consume=False):
         """Check if slot is transformable and transform if it is.
         Be careful using this, make sure the item you want to transform is

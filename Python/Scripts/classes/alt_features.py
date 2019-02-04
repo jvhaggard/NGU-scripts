@@ -17,7 +17,7 @@ import usersettings as userset
 from classes.window import Window as window
 from classes.discord import Discord
 
-class AltFeatures(Navigation, Inputs):
+class AltFeatures(Navigation, Inputs, AltInputs):
     """Handles the Windows 2018 different features in the game."""
 
     def get_inventory_slots(self, slots):
@@ -45,7 +45,7 @@ class AltFeatures(Navigation, Inputs):
         for slot in self.equipment:
             if (slot == "cube"):
                 return
-            self.d_click(self.equipment[slot]["x"], self.equipment[slot]["y"])
+        self.d_click(self.equipment[slot]["x"], self.equipment[slot]["y"])
 
     def alt_boost_equipment(self):
         """Boost all equipment."""
@@ -54,7 +54,8 @@ class AltFeatures(Navigation, Inputs):
         for slot in self.equipment:
             if (slot == "cube"):
                 return
-            self.a_click(self.equipment[slot]["x"], self.equipment[slot]["y"])
+        self.a_click(self.equipment[slot]["x"], self.equipment[slot]["y"])
+
     def alt_merge_inventory(self, slots):
         """Merge all inventory slots starting from 1 to slots.
 
@@ -75,16 +76,11 @@ class AltFeatures(Navigation, Inputs):
         self.menu("inventory")
         coords = self.get_inventory_slots(slots)
         for slot in coords:
-            self.a_click(slot.x, slot.y)
-
+            self.a_click(slot.x, slot.y)        
     def boost_cube(self):
         """Boost cube."""
         self.menu("inventory")
-        for slot in self.equipment:
-            if (slot == "cube"):
-                self.click(self.equipment[slot]["x"],
-                            self.equipment[slot]["y"], "right")
-                return
+        self.click(self.equipment["cube"]["x"], self.equipment["cube"]["y"], "right")
 
     def check_challenge(self):
         """Check if a challenge is active."""
@@ -139,14 +135,15 @@ class AltFeatures(Navigation, Inputs):
         print(coords)
         for slot in coords[::-1]:
             self.click(slot.x,slot.y)
+            time.sleep(.2)
             if consume:
                 coords = self.image_search(Window.x, Window.y, Window.x + 960, Window.y + 600, self.get_file_path("images", "consumable.png"), threshold)
             else:
                 coords = self.image_search(Window.x, Window.y, Window.x + 960, Window.y + 600, self.get_file_path("images", "transformable.png"), threshold)
 
             if coords:
-                self.alt_ctrl_click([slot.x][-1], [slot.y][-1])
-            time.sleep(.5)
+                self.ctrl_click([slot.x][-1], [slot.y][-1])
+            time.sleep(5)
             break
 
     def quest_complete(self):
