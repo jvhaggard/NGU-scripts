@@ -13,10 +13,14 @@ from classes.stats import Stats, EstimateRate, Tracker
 from classes.upgrade import Upgrade
 from classes.window import Window
 from classes.discord import Discord
+from datetime import datetime
+from pytz import timezone
 
 import ngucon as ncon
 import time
 
+ 
+tz = timezone('EST')
 w = Window()
 i = Inputs()
 nav = Navigation()
@@ -30,6 +34,8 @@ u = Upgrade(37500, 37500, 2, 2, 3)
 
 print(w.x, w.y)
 tracker = Tracker(3)
+
+quest_done = False
 
 while True:  # main loop to go foreverrrrr
     #Add Money Pit Check
@@ -51,21 +57,22 @@ while True:  # main loop to go foreverrrrr
     #Gold diggers
     feature.gold_diggers([4, 5, 6, 7, 8, 9, 10, 11, 12])
     #Equip
-    # alt_features.alt_merge_equipment()
-    # alt_features.alt_boost_equipment()
-    alt_features.alt_merge_inventory(2)
-    alt_features.alt_boost_inventory(1)
+    alt_features.alt_merge_equipment()
+    alt_features.alt_boost_equipment()
+    # alt_features.alt_merge_inventory(1)
+    # alt_features.alt_boost_inventory(1)
     alt_features.boost_cube()
-    alt_features.clear_keypresses()
+    # alt_features.clear_keypresses()
+    # time.sleep(1)
     #It will ping you the quest is complete every 3 minutes or so
     #Make it only fire once with a variable
-    # if alt_features.quest_complete():
-        # feature.adventure(itopod=True, itopodauto=True)
+    # if alt_features.quest_complete() and quest_done == False:
         # Discord.send_message(('Quest Complete! Go turn it in and start a new one'), Discord.ERROR)
-    # if not alt_features.quest_complete():
+        # quest_done  = True
+    # if not alt_features.quest_complete() and quest_done == False:
         # count = 0
         # while count <= 12:
-            # alt_features.alt_transform_slot(count,threshold=.9,consume=True)
+            # alt_features.alt_transform_slot(count,threshold=.8,consume=True)
             # count += 1
     # alt_features.alt_transform_slot(4,threshold=.9,consume=True)
     # alt_feature.alt_transform_slot(5,threshold=.9,consume=True)
@@ -74,7 +81,11 @@ while True:  # main loop to go foreverrrrr
     # feature.adventure(zone=13, highest=False, itopod=False, itopodauto=False)
  
     #Sleep before trying again
+    print(datetime.now(tz))
+    print("===")
+    print("Sleeping for 180 seconds")
     time.sleep(180)
+    print("===")
     #
     tracker.progress()
     # feature.snipe(18, 300, once=False, highest=False, bosses=True)
