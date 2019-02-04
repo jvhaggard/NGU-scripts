@@ -45,7 +45,7 @@ class AltFeatures(Navigation, Inputs, AltInputs):
         for slot in self.equipment:
             if (slot == "cube"):
                 return
-            self.d_click(self.equipment[slot]["x"], self.equipment[slot]["y"])
+        self.d_click(self.equipment[slot]["x"], self.equipment[slot]["y"])
 
     def alt_boost_equipment(self):
         """Boost all equipment."""
@@ -54,7 +54,8 @@ class AltFeatures(Navigation, Inputs, AltInputs):
         for slot in self.equipment:
             if (slot == "cube"):
                 return
-            self.a_click(self.equipment[slot]["x"], self.equipment[slot]["y"])
+        self.a_click(self.equipment[slot]["x"], self.equipment[slot]["y"])
+
     def alt_merge_inventory(self, slots):
         """Merge all inventory slots starting from 1 to slots.
 
@@ -75,7 +76,44 @@ class AltFeatures(Navigation, Inputs, AltInputs):
         self.menu("inventory")
         coords = self.get_inventory_slots(slots)
         for slot in coords:
-            self.a_click(slot.x, slot.y)
+            self.a_click(slot.x, slot.y)        
+    def boost_cube(self):
+        """Boost cube."""
+        self.menu("inventory")
+        self.click(self.equipment["cube"]["x"], self.equipment["cube"]["y"], "right")
+
+    def check_challenge(self):
+        """Check if a challenge is active."""
+        self.rebirth()
+        self.click(ncon.CHALLENGEBUTTONX, ncon.CHALLENGEBUTTONY)
+        time.sleep(userset.LONG_SLEEP)
+        color = self.get_pixel_color(ncon.CHALLENGEACTIVEX,
+                                        ncon.CHALLENGEACTIVEY)
+
+        return True if color == ncon.CHALLENGEACTIVECOLOR else False
+    
+
+    #TODO: Why is this not importing from inputs and I had to put it here?
+    def alt_ctrl_click(self, x, y):
+        """Clicks at pixel x, y while simulating the CTRL button to be down."""
+        x += window.x
+        y += window.y
+        lParam = win32api.MAKELONG(x, y)
+        # MOUSEMOVE event is required for game to register clicks correctly
+        win32gui.PostMessage(window.id, wcon.WM_MOUSEMOVE, 0, lParam)
+        time.sleep(.7)
+        #Ctrl then left click
+        win32gui.PostMessage(window.id, wcon.WM_KEYDOWN, 0x11, 0)
+        time.sleep(.2)   
+        win32gui.PostMessage(window.id, wcon.WM_LBUTTONDOWN,
+                                wcon.MK_LBUTTON, lParam)
+        time.sleep(.2)
+        print("Down")
+        win32gui.PostMessage(window.id, wcon.WM_LBUTTONUP,
+                                wcon.MK_LBUTTON, lParam)
+        time.sleep(.2)
+        win32gui.PostMessage(window.id, wcon.WM_KEYUP, 0x11, 0)
+        time.sleep(0.5)
 
     def alt_transform_slot(self, slots, threshold=0.8, consume=False):
         """Check if slot is transformable and transform if it is.
@@ -97,14 +135,15 @@ class AltFeatures(Navigation, Inputs, AltInputs):
         print(coords)
         for slot in coords[::-1]:
             self.click(slot.x,slot.y)
+            time.sleep(.2)
             if consume:
                 coords = self.image_search(Window.x, Window.y, Window.x + 960, Window.y + 600, self.get_file_path("images", "consumable.png"), threshold)
             else:
                 coords = self.image_search(Window.x, Window.y, Window.x + 960, Window.y + 600, self.get_file_path("images", "transformable.png"), threshold)
 
             if coords:
-                self.alt_ctrl_click([slot.x][-1], [slot.y][-1])
-            time.sleep(.5)
+                self.ctrl_click([slot.x][-1], [slot.y][-1])
+            time.sleep(5)
             break
     
     def clear_keypresses(self):
