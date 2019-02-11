@@ -163,7 +163,7 @@ class AltFeatures(Navigation, Inputs, AltInputs):
             break
 
     def quest_complete(self):
-        """Check if quest is complet and go to ITOPOD if it is"""
+        """Check if quest is complete and go to ITOPOD if it is"""
         # self.click(ncon.QUESTLOCKEDX, ncon.QUESTLOCKEDY)
         quest_color = self.get_pixel_color(ncon.QUESTLOCKEDX, ncon.QUESTLOCKEDY)
         print(quest_color)
