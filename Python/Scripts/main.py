@@ -19,14 +19,26 @@ from classes.discord import Discord
 import ngucon as ncon
 import time
 
+def advanced_run(f, af, i):
+    i.send_string("r")
+    time.sleep(.5)
+    i.send_string("t")
+    time.sleep(.5)
+    f.time_machine(5e8, 5e8)
+    f.augments({"EB": 0.7, "CS": 0.3}, 2e9)
+    f.blood_magic(8)
+    f.advanced_training(9e9)
+    af.boost_cube()
+    f.gold_diggers([2, 4, 5, 6, 7, 8, 9, 11, 12])
 
-def speedrun(duration, f, af):
+def speedrun(duration, f, af, i):
     """Start a speedrun.
 
     Keyword arguments
     duration -- duration in minutes to run
     f -- feature object
     """
+    adv_done = False
     f.do_rebirth()
     start = time.time()
     end = time.time() + (duration * 60) + 1
@@ -40,10 +52,10 @@ def speedrun(duration, f, af):
     f.augments({"EB": 0.7, "CS": 0.3}, 2e9)
     f.blood_magic(8)
     af.boost_cube()
-    f.gold_diggers([2, 3, 4, 5, 6, 8, 9, 11, 12])
+    f.gold_diggers([2, 3, 4, 5, 6, 7, 8, 9, 11])
     while time.time() < end - 20:
         f.wandoos(True)
-        if time.time () > start + 40:
+        if time.time () > start + 40 and time.time () < start + 1150:
             try:
                 NGU_energy = f.get_idle_cap()
                 feature.assign_ngu(NGU_energy, [1, 2, 4, 5, 6, 7, 8, 9])
@@ -52,6 +64,15 @@ def speedrun(duration, f, af):
             except ValueError:
                 print("couldn't assign e/m to NGUs")
             time.sleep(0.5)
+        if (time.time () > start + 780) and adv_done == False:
+            advanced_run(f, af, i)
+            adv_done = True
+            f.nuke()
+        if (time.time () > start + 1200):
+                af.boost_cube()
+                f.gold_diggers([2, 4, 5, 6, 7, 8, 9, 11, 12])
+                time.sleep(180)
+
     f.nuke()
     time.sleep(2)
     f.fight()
@@ -59,6 +80,7 @@ def speedrun(duration, f, af):
     f.spin()
     f.save_check()
     tracker.progress()
+    # f.ygg(rebirth=True) # Harvest for one hour + shorter runs outside of 24
     # u.em()
     # tracker.adjustxp()
     f.speedrun_bloodpill()
@@ -88,8 +110,8 @@ count = 0
 
 #feature.bb_ngu(4e8, [1, 2, 3, 4, 5, 6, 7, 8, 9], 1.05)
 #feature.speedrun_bloodpill()
-# while True:  # main loop
-while count <= 5: # Adjust # for how many runs you want to do during testing minus 1
+while True:  # main loop
+# while count <= 4: # Adjust # for how many runs you want to do during testing minus 1
     count += 1
     #feature.boost_equipment()
     #feature.ygg()
@@ -97,5 +119,6 @@ while count <= 5: # Adjust # for how many runs you want to do during testing min
 
     #time.sleep(120)
     # c.start_challenge(3)
-    speedrun(3, feature, alt_features)
+    # print(count)
+    speedrun(3, feature, alt_features, i)
 Discord.send_message(('Run done, check if challenge complete!'), Discord.ERROR)
