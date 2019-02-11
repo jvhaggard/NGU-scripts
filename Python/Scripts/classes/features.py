@@ -23,7 +23,7 @@ class Features(Navigation, Inputs):
         for slot in self.equipment:
             if (slot == "cube"):
                 return
-            self.d_click(self.equipment[slot]["x"], self.equipment[slot]["y"])
+            self.click(self.equipment[slot]["x"], self.equipment[slot]["y"])
 
     def boost_equipment(self):
         """Boost all equipment."""
@@ -34,16 +34,18 @@ class Features(Navigation, Inputs):
                 self.click(self.equipment[slot]["x"],
                            self.equipment[slot]["y"], "right")
                 return
-            self.a_click(self.equipment[slot]["x"], self.equipment[slot]["y"])
+            self.click(self.equipment[slot]["x"], self.equipment[slot]["y"])
 
-    def merge_inventory(self):
-        """Merge all inventory through slot X."""
+    def merge_inventory(self, slots):
+        """Merge all inventory slots starting from 1 to slots.
+        Keyword arguments:
+        slots -- The amount of slots you wish to merge
+        """
         self.menu("inventory")
-        time.sleep(0.5)
-        for slot in self.inventory:
-            if (slot == "cube"):
-                return
-            self.d_click(self.inventory[slot]["x"], self.inventory[slot]["y"])
+        coords = self.get_inventory_slots(slots)
+        for slot in coords:
+            self.send_string("d")
+            self.click(slot.x, slot.y)
 
     def boost_inventory(self):
         """Boost all inventory through slot X."""
@@ -54,7 +56,7 @@ class Features(Navigation, Inputs):
                 self.click(self.inventory[slot]["x"],
                            self.inventory[slot]["y"], "right")
                 return
-            self.a_click(self.inventory[slot]["x"], self.inventory[slot]["y"])
+            self.click(self.inventory[slot]["x"], self.inventory[slot]["y"])
 
     def get_current_boss(self):
         """Go to fight and read current boss number."""

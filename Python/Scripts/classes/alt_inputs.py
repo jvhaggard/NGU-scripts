@@ -29,10 +29,10 @@ class AltInputs():
         win32gui.PostMessage(window.id, wcon.WM_LBUTTONDOWN,
                                 wcon.MK_LBUTTON, lParam)
         win32gui.PostMessage(window.id, wcon.WM_KEYDOWN, 0x41, 0)
-        time.sleep(.1)
-        win32gui.PostMessage(window.id, wcon.WM_KEYUP, 0x41, 1)
+        win32gui.PostMessage(window.id, wcon.WM_KEYDOWN, 0x41, 0)
         win32gui.PostMessage(window.id, wcon.WM_LBUTTONUP,
                                 wcon.MK_LBUTTON, lParam)
+        win32gui.PostMessage(window.id, wcon.WM_KEYUP, 0x41, )
         time.sleep(0.5)
 
     def d_click(self, x, y):
@@ -45,10 +45,10 @@ class AltInputs():
         win32gui.PostMessage(window.id, wcon.WM_LBUTTONDOWN,
                                 wcon.MK_LBUTTON, lParam)
         win32gui.PostMessage(window.id, wcon.WM_KEYDOWN, 0x44, 0)
-        time.sleep(.1)
-        win32gui.PostMessage(window.id, wcon.WM_KEYUP, 0x44, 1)
+        win32gui.PostMessage(window.id, wcon.WM_KEYDOWN, 0x44, 0)
         win32gui.PostMessage(window.id, wcon.WM_LBUTTONUP,
                                 wcon.MK_LBUTTON, lParam)
+        win32gui.PostMessage(window.id, wcon.WM_KEYUP, 0x44, 0)
         time.sleep(0.5)
 
     def alt_ctrl_click(self, x, y):
