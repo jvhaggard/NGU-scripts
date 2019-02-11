@@ -55,25 +55,27 @@ while True:  # main loop to go foreverrrrr
     # feature.set_ngu([2,3], magic=True)
     # feature.bb_ngu(1e9, [2, 3], 1.05, magic=True)
     #Gold diggers
-    feature.gold_diggers([4, 5, 6, 7, 8, 9, 10, 11, 12])
+    feature.gold_diggers([1, 4, 5, 6, 7, 8, 9, 10, 11, 12])
     #Equip
-    alt_features.alt_merge_equipment()
     alt_features.alt_boost_equipment()
+    # alt_features.alt_merge_equipment()
+    # alt_features.clear_keypresses()
     # alt_features.alt_merge_inventory(1)
     # alt_features.alt_boost_inventory(1)
     alt_features.boost_cube()
-    # alt_features.clear_keypresses()
     # time.sleep(1)
     #It will ping you the quest is complete every 3 minutes or so
     #Make it only fire once with a variable
-    # if alt_features.quest_complete() and quest_done == False:
-        # Discord.send_message(('Quest Complete! Go turn it in and start a new one'), Discord.ERROR)
-        # quest_done  = True
+    if alt_features.quest_complete(): #and quest_done == False:
+        Discord.send_message(('Quest Completed!'), Discord.ERROR)
+        alt_features.quest_finished()
+        # quest_done  = True 
+        alt_features.quest_finished() #Click to start new quest
+        alt_features.quest_subcontract() #click to start subcontract
+        # feature.adventure(itopod=True, itopodauto=True)
     # if not alt_features.quest_complete() and quest_done == False:
-        # count = 0
-        # while count <= 12:
-            # alt_features.alt_transform_slot(count,threshold=.8,consume=True)
-            # count += 1
+        # alt_features.click_quest() # Clicks first 2 spot for quest items to merge
+    #Start new quest > make quest_done = false
     # alt_features.alt_transform_slot(4,threshold=.9,consume=True)
     # alt_feature.alt_transform_slot(5,threshold=.9,consume=True)
     # alt_feature.alt_transform_slot(6,threshold=.9,consume=True)

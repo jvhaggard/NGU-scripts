@@ -23,7 +23,10 @@ class Features(Navigation, Inputs):
             if (slot == "cube"):
                 return
             self.click(self.equipment[slot]["x"], self.equipment[slot]["y"])
+<<<<<<< HEAD
             self.send_string("d")
+=======
+>>>>>>> 8a76b0475ebef34c1239d8dd24fd2bb6b5b7bf7a
 
     def boost_equipment(self):
         """Boost all equipment."""
@@ -34,7 +37,28 @@ class Features(Navigation, Inputs):
                            self.equipment[slot]["y"], "right")
                 return
             self.click(self.equipment[slot]["x"], self.equipment[slot]["y"])
-            self.send_string("a")
+
+    def merge_inventory(self, slots):
+        """Merge all inventory slots starting from 1 to slots.
+        Keyword arguments:
+        slots -- The amount of slots you wish to merge
+        """
+        self.menu("inventory")
+        coords = self.get_inventory_slots(slots)
+        for slot in coords:
+            self.send_string("d")
+            self.click(slot.x, slot.y)
+
+    def boost_inventory(self):
+        """Boost all inventory through slot X."""
+        self.menu("inventory")
+        time.sleep(0.5)
+        for slot in self.inventory:
+            if (slot == "cube"):
+                self.click(self.inventory[slot]["x"],
+                           self.inventory[slot]["y"], "right")
+                return
+            self.click(self.inventory[slot]["x"], self.inventory[slot]["y"])
 
     def get_current_boss(self):
         """Go to fight and read current boss number."""
@@ -462,7 +486,9 @@ class Features(Navigation, Inputs):
             self.menu("ngu")
 
         self.input_box()
-        self.send_string(str(int(value // len(targets))))
+        time.sleep(.1)
+        self.send_string(value // len(targets))
+        time.sleep(.1)
         for i in targets:
             self.click(ncon.NGU_PLUSX, ncon.NGU_PLUSY + i * 35)
 
@@ -725,9 +751,17 @@ class Features(Navigation, Inputs):
         if coords:
             self.ctrl_click(*slot)
 
-    def quest_complete(self):
-        """Check if quest is complete.  Can be used in your main script to send an alert or other action"""
-        quest_color = self.get_pixel_color(ncon.QUESTLOCKEDX, ncon.QUESTLOCKEDY)
-        if quest_color == ncon.QUEST_READY_COLOR:
-            time.sleep(userset.SHORT_SLEEP)
-        return quest_color == ncon.QUEST_READY_COLOR
+    def get_idle_cap(self, magic=False):
+            """Get the available idle energy or magic."""
+            try:
+                if magic:
+                    res = self.ocr(ncon.OCR_MAGIC_X1, ncon.OCR_MAGIC_Y1, ncon.OCR_MAGIC_X2, ncon.OCR_MAGIC_Y2)
+                else:
+                    res = self.ocr(ncon.OCR_ENERGY_X1, ncon.OCR_ENERGY_Y1, ncon.OCR_ENERGY_X2, ncon.OCR_ENERGY_Y2)
+                match = re.search(".*(\d+\.\d+E\+\d+)", res)
+                if match is not None:
+                    return int(float(match.group(1)))
+                elif match is None:git st
+                    return 0
+            except ValueError:
+                print("Couldn't get idle e/m")

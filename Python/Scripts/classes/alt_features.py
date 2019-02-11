@@ -45,7 +45,7 @@ class AltFeatures(Navigation, Inputs, AltInputs):
         for slot in self.equipment:
             if (slot == "cube"):
                 return
-        self.d_click(self.equipment[slot]["x"], self.equipment[slot]["y"])
+            self.d_click(self.equipment[slot]["x"], self.equipment[slot]["y"])
 
     def alt_boost_equipment(self):
         """Boost all equipment."""
@@ -54,7 +54,7 @@ class AltFeatures(Navigation, Inputs, AltInputs):
         for slot in self.equipment:
             if (slot == "cube"):
                 return
-        self.a_click(self.equipment[slot]["x"], self.equipment[slot]["y"])
+            self.a_click(self.equipment[slot]["x"], self.equipment[slot]["y"])
 
     def alt_merge_inventory(self, slots):
         """Merge all inventory slots starting from 1 to slots.
@@ -81,6 +81,22 @@ class AltFeatures(Navigation, Inputs, AltInputs):
         """Boost cube."""
         self.menu("inventory")
         self.click(self.equipment["cube"]["x"], self.equipment["cube"]["y"], "right")
+
+    def click_quest(self):
+        """Right click slot 1 and 2 for quests"""
+        # This assumes you aren't getting any other drops, might need to put in a transform check or item OCR?
+        self.menu("inventory")
+        self.click(ncon.INVENTORY_SLOTS_X, ncon.INVENTORY_SLOTS_Y, "right")
+        time.sleep(.5)
+        self.click((ncon.INVENTORY_SLOT_2X), ncon.INVENTORY_SLOT_2Y, "right")
+
+    def quest_finished(self):
+        self.menu("quest")
+        self.click(ncon.QUEST_ACTION_X, ncon.QUEST_ACTION_Y)
+
+    def quest_subcontract(self):
+        self.menu("quest")
+        self.click(ncon.QUEST_SUBCONTRACT_X, ncon.QUEST_SUBCONTRACT_Y)
 
     def check_challenge(self):
         """Check if a challenge is active."""
