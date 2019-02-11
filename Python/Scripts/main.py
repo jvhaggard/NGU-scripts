@@ -48,19 +48,21 @@ def speedrun(duration, f, af, i):
     time.sleep(4)
     # f.loadout(2)  # Bar/power equimpent
     f.adventure(itopod=True, itopodauto=True)
-    f.time_machine(5e8, 5e8)
+    f.time_machine(1e9, 1e9)
     f.augments({"EB": 0.7, "CS": 0.3}, 2e9)
     f.blood_magic(8)
     af.boost_cube()
-    f.gold_diggers([2, 3, 4, 5, 6, 7, 8, 9, 11])
+    f.gold_diggers([2, 3, 4, 5, 6, 7, 8, 9, 11, 12])
+    feature.bb_ngu(6e9, [1, 2, 3, 4, 5, 6], 1.05)
+    feature.bb_ngu(1.5e10, [1], 1.05, magic=True)
     while time.time() < end - 20:
         f.wandoos(True)
         if time.time () > start + 40 and time.time () < start + 1150:
             try:
                 NGU_energy = f.get_idle_cap()
-                feature.assign_ngu(NGU_energy, [1, 2, 4, 5, 6, 7, 8, 9])
+                feature.assign_ngu(NGU_energy, [7, 8, 9])
                 NGU_magic = f.get_idle_cap(magic=True)
-                feature.assign_ngu(NGU_magic, [1, 2, 3, 4], magic=True)
+                feature.assign_ngu(NGU_magic, [2, 3, 4, 5, 6, 7], magic=True)
             except ValueError:
                 print("couldn't assign e/m to NGUs")
             time.sleep(0.5)
@@ -108,7 +110,7 @@ tracker = Tracker(3)
 # print(c.check_challenge())
 count = 0
 
-#feature.bb_ngu(4e8, [1, 2, 3, 4, 5, 6, 7, 8, 9], 1.05)
+
 #feature.speedrun_bloodpill()
 while True:  # main loop
 # while count <= 4: # Adjust # for how many runs you want to do during testing minus 1

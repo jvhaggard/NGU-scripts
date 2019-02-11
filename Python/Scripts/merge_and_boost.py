@@ -55,9 +55,10 @@ while True:  # main loop to go foreverrrrr
     # feature.set_ngu([2,3], magic=True)
     # feature.bb_ngu(1e9, [2, 3], 1.05, magic=True)
     #Gold diggers
-    feature.gold_diggers([1, 4, 5, 6, 7, 8, 9, 10, 11, 12])
+    feature.gold_diggers([2, 3, 4, 5, 6, 7, 8, 9, 10])
+    # feature.wandoos(True)
     #Equip
-    alt_features.alt_boost_equipment()
+    # alt_features.alt_boost_equipment()
     # alt_features.alt_merge_equipment()
     # alt_features.clear_keypresses()
     # alt_features.alt_merge_inventory(1)

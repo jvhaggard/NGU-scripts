@@ -23,10 +23,6 @@ class Features(Navigation, Inputs):
             if (slot == "cube"):
                 return
             self.click(self.equipment[slot]["x"], self.equipment[slot]["y"])
-<<<<<<< HEAD
-            self.send_string("d")
-=======
->>>>>>> 8a76b0475ebef34c1239d8dd24fd2bb6b5b7bf7a
 
     def boost_equipment(self):
         """Boost all equipment."""
@@ -761,7 +757,7 @@ class Features(Navigation, Inputs):
                 match = re.search(".*(\d+\.\d+E\+\d+)", res)
                 if match is not None:
                     return int(float(match.group(1)))
-                elif match is None:git st
+                elif match is None:
                     return 0
             except ValueError:
                 print("Couldn't get idle e/m")
