@@ -89,17 +89,10 @@ class Challenge(Features):
                 try:
                     self.click(x, y, button="right")
                     time.sleep(userset.LONG_SLEEP)
-                    target = self.ocr(ncon.OCR_CHALLENGE_24HC_TARGETX1,
-                                      ncon.OCR_CHALLENGE_24HC_TARGETY1,
-                                      ncon.OCR_CHALLENGE_24HC_TARGETX2,
-                                      ncon.OCR_CHALLENGE_24HC_TARGETY2)
-                    target = int(self.remove_letters(target))
-                    print(f"Found target boss: {target}")
                     self.click(x, y)
                     time.sleep(userset.LONG_SLEEP)
                     self.confirm()
                     time.sleep(userset.LONG_SLEEP)
-                    b.basic(target)
                 except ValueError:
                     print("couldn't detect the target level of 24HC")
                     Discord.send_message("Couldn't detect the" +
